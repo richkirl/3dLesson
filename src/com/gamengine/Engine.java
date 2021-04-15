@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 import com.gamengine.render.Loader;
 import com.gamengine.render.RawModel;
 import com.gamengine.render.Renderer;
+import shaders.StaticShader;
 
 public class Engine {
 	Window window = new Window();
@@ -31,6 +32,7 @@ public class Engine {
 	public void loop() {
 		Loader loader = new Loader();
 		Renderer renderer = new Renderer();
+		StaticShader statics = new StaticShader();
 		float[] vertices = {
 	    		-0.5f, 0.5f, 0.0f,
 	    		-0.5f, -0.5f, 0.0f,
@@ -49,12 +51,14 @@ public class Engine {
 			callbacks.processInput(window.getWindow());
 			
 			renderer.prepare();
-			
+			statics.start();
 			renderer.render(model);
+			statics.stop();
 			GLFW.glfwSwapBuffers(window.getWindow());
 			GLFW.glfwPollEvents();
 			
 		}
+		statics.clean();
 		loader.clean();
 		window.destroy();
 		

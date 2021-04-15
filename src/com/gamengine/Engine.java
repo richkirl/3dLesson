@@ -1,12 +1,14 @@
 package com.gamengine;
 
+import models.TexturedModel;
 import org.lwjgl.glfw.GLFW;
 
 
 import com.gamengine.render.Loader;
-import com.gamengine.render.RawModel;
+import models.RawModel;
 import com.gamengine.render.Renderer;
 import shaders.StaticShader;
+import textures.Modeltexture;
 
 public class Engine {
 	Window window = new Window();
@@ -44,15 +46,23 @@ public class Engine {
 				3,1,2
 		};
 
-	    RawModel model = loader.loadToVao(vertices,indices);
-		
+		float[] textureCoords = {
+			0,0,
+			0,1,
+			1,1,
+			1,0
+		};
+
+	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
+		Modeltexture texture = new Modeltexture(loader.loadTexture("1111.png"));
+		TexturedModel texturedModel = new TexturedModel(model,texture);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
 			
 			callbacks.processInput(window.getWindow());
 			
 			renderer.prepare();
 			statics.start();
-			renderer.render(model);
+			renderer.render(texturedModel);
 			statics.stop();
 			GLFW.glfwSwapBuffers(window.getWindow());
 			GLFW.glfwPollEvents();

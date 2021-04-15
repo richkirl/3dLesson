@@ -6,6 +6,7 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.RawModel;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -17,10 +18,11 @@ public class Loader {
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
 	private int textureID;
-	public RawModel loadToVao(float[] positions, int[] indices) {
+	public RawModel loadToVao(float[] positions,float[] textureCoords, int[] indices) {
 		int vaoId = createVao();
 		bindIndicesBuffer(indices);
-		storeDataAttribList(0,positions);
+		storeDataAttribList(0,3,positions);
+		storeDataAttribList(1,3,textureCoords);
 		unbindVao();
 		return new RawModel(vaoId,positions.length);
 		
@@ -28,13 +30,14 @@ public class Loader {
 	
 	public int loadTexture(String fileName) {
 		textureID = GL11.glGenTextures();
-		Image texture = Image.loadImage("res/textures/"+fileName);
+		Image texture = Image.loadImage("C:\\JavaGameDev\\Lwjgl3-Game-Engine-Programming-Series-starting_code\\3dLesson\\res\\"+fileName);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		//GL30.glGenerateMipmap(textureID);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, texture.getWidth(), texture.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, texture.getImage());
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D,0);
-		
+
 		textures.add(textureID);
 		return textureID;
 	}
@@ -57,13 +60,13 @@ public class Loader {
 		GL30.glBindVertexArray(vaoId);
 		return vaoId;
 	}
-	private void storeDataAttribList(int attribNumber, float[] data) {
+	private void storeDataAttribList(int attribNumber,int coordinateSize, float[] data) {
 		int vboId = GL15.glGenBuffers();
 		vbos.add(vboId);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboId);
 		FloatBuffer buffer = storeDataInFloatBuffer(data);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(attribNumber, 3, GL11.GL_FLOAT, false, 0, 0);
+		GL20.glVertexAttribPointer(attribNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
 	private void unbindVao() {
@@ -80,7 +83,8 @@ public class Loader {
 
 	private IntBuffer storeDataInIntBuffer(int[] data){
 		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
-		buffer.put(data).flip();
+		buffer.put(data);
+		buffer.flip();
 		return buffer;
 	}
 

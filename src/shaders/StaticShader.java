@@ -8,6 +8,8 @@ public class StaticShader extends ShaderProgram{
     }
     @Override
     protected  void bindAttrib(){
+
         super.bindAttrib(0,"position");
+        super.bindAttrib(1,"textureCoords");
     }
 }

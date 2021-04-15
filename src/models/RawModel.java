@@ -1,4 +1,4 @@
-package com.gamengine.render;
+package models;
 
 public class RawModel {
 	private int vaoID;

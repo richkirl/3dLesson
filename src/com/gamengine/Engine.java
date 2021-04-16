@@ -55,7 +55,7 @@ public class Engine {
 		};
 
 	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
-		Modeltexture texture = new Modeltexture(loader.loadTexture("photos_2020_5_11_fst_gray-wall-grunge.jpg"));
+		Modeltexture texture = new Modeltexture(loader.loadTexture("grass1.png"));
 		TexturedModel texturedModel = new TexturedModel(model,texture);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
 			

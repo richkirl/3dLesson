@@ -41,11 +41,12 @@ public class Image {
 			
 			image = STBImage.stbi_load(path, w, h, comp, 4);
 			if(image == null) {
-				System.err.println("Couldnt load! " + path);
+				System.err.println("Couldnt load! Image" + path);
 				
 			}
 			width = w.get();
 			height = h.get();
+			STBImage.stbi_image_free(image);
 		}
 		return new Image(width,height,image);
 	}

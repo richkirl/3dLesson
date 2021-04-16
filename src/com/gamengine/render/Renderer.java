@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL30;
 
 public class Renderer {
 	public void prepare() {
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		GL11.glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	}
 	public void render(TexturedModel texturedModel) {

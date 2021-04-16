@@ -36,25 +36,26 @@ public class Engine {
 		Renderer renderer = new Renderer();
 		StaticShader statics = new StaticShader();
 		float[] vertices = {
-	    		-0.5f, 0.5f, 0.0f,
-	    		-0.5f, -0.5f, 0.0f,
-	    		0.5f, -0.5f, 0.0f,
-				0.5f, 0.5f, 0.0f,
+	    		-0.5f, 0.5f, 0.0f, //
+	    		-0.5f, -0.5f, 0.0f, //
+	    		0.5f, -0.5f, 0.0f,  //
+				0.5f, 0.5f, 0.0f   //
+
 	    };
 		int[] indices = {
-				0,1,3,
-				3,1,2
+				0,1,3, //
+				3,1,2  //
 		};
 
 		float[] textureCoords = {
-			0,0,
-			0,1,
-			1,1,
-			1,0
+				0,0,
+				0,1,
+				1,1,
+				1,0
 		};
 
 	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
-		Modeltexture texture = new Modeltexture(loader.loadTexture("1111.png"));
+		Modeltexture texture = new Modeltexture(loader.loadTexture("photos_2020_5_11_fst_gray-wall-grunge.jpg"));
 		TexturedModel texturedModel = new TexturedModel(model,texture);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
 			

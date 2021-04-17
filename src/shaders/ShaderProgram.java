@@ -1,24 +1,36 @@
 package shaders;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
-public class ShaderProgram {
+public abstract class ShaderProgram {
     private int programID;
     private int vertexShaderID, fragmentShaderID;
+    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     public ShaderProgram(String vertexFile, String fragmentFile){
         vertexShaderID = loadShader(vertexFile,GL20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile,GL20.GL_FRAGMENT_SHADER);
         programID = GL20.glCreateProgram();
         GL20.glAttachShader(programID,vertexShaderID);
         GL20.glAttachShader(programID,fragmentShaderID);
+        bindAttrib();
         GL20.glLinkProgram(programID);
         GL20.glValidateProgram(programID);
+        getAllUniformLocations();
     }
+    protected abstract void getAllUniformLocations();
+    protected int getUniformLocation(String uniformName){
+        return GL20.glGetUniformLocation(programID,uniformName);
+    }
+
     public void start(){
         GL20.glUseProgram(programID);
     }
@@ -42,7 +54,24 @@ public class ShaderProgram {
     protected void bindAttrib(int attrib, String varName){
         GL20.glBindAttribLocation(programID,attrib,varName);
     }
-
+    protected void loadFloat(int location,float value){
+        GL20.glUniform1f(location,value);
+    }
+    protected void loadVector(int location, Vector3f vector){
+        GL20.glUniform3f(location,vector.x,vector.y,vector.z);
+    }
+    protected void loadBoolean(int location, boolean value){
+        float toLoad = 0;
+        if(value){
+            toLoad = 1;
+        }
+        GL20.glUniform1f(location,toLoad);
+    }
+    protected void loadmatrix(int location, Matrix4f matrix){
+        matrix.get(matrixBuffer);
+        matrixBuffer.flip();
+        GL20.glUniformMatrix4fv(location,false,matrixBuffer);
+    }
     private static int loadShader(String file, int type){
         StringBuilder shaderSource = new StringBuilder();
         try{

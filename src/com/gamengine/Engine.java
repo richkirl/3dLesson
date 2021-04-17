@@ -9,7 +9,6 @@ import org.lwjgl.glfw.GLFW;
 import com.gamengine.render.Loader;
 import models.RawModel;
 import com.gamengine.render.Renderer;
-import org.lwjgl.opengl.*;
 import shaders.StaticShader;
 import textures.Modeltexture;
 

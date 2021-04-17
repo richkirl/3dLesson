@@ -1,6 +1,7 @@
 package toolbox;
 
 
+import Debugtools.Debug;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -11,16 +12,15 @@ public class Maths {
         Matrix4f matrix = new Matrix4f();
 
         matrix.identity();
-        //System.out.println(matrix);
-        //System.out.println("=====================================================");
+        //Debug debug= new Debug(matrix);
+        //debug.prvid();
         matrix.translate(translation,matrix).rotate((float)Math.toRadians(rx),
                         new Vector3f(1,0,0),matrix).rotate((float)Math.toRadians(ry),
                         new Vector3f(0,1,0),matrix).rotate((float)Math.toRadians(rz),
                         new Vector3f(0,0,1),matrix).scale(
                         new Vector3f(scale,scale,scale),matrix);
 
-        //System.out.println(matrix);
-        //System.out.println("=====================================================");
+        //debug.prvid();
         return matrix;
     }
 }

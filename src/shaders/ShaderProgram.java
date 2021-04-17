@@ -35,8 +35,6 @@ public abstract class ShaderProgram {
 
     public void start(){
         GL20.glUseProgram(programID);
-        getUniformLocation("transformationMatrix");
-        getAllUniformLocations();
     }
     public void stop(){
         GL20.glUseProgram(0);
@@ -48,7 +46,6 @@ public abstract class ShaderProgram {
         GL20.glDeleteShader(vertexShaderID);
         GL20.glDeleteShader(fragmentShaderID);
         GL20.glDeleteProgram(programID);
-
     }
 
     protected void bindAttrib() {

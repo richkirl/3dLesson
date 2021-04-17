@@ -1,5 +1,6 @@
 package com.gamengine;
 
+import entities.Camera;
 import entities.Entity;
 import models.TexturedModel;
 import org.joml.Vector3f;
@@ -11,6 +12,8 @@ import models.RawModel;
 import com.gamengine.render.Renderer;
 import shaders.StaticShader;
 import textures.Modeltexture;
+
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 
 public class Engine {
 	Window window = new Window();
@@ -35,8 +38,9 @@ public class Engine {
 
 	public void loop() {
 		Loader loader = new Loader();
-		Renderer renderer = new Renderer();
+
 		StaticShader staticshader = new StaticShader();
+		Renderer renderer = new Renderer(window,staticshader);
 		float[] vertices = {
 	    		-0.5f, 0.5f, 0.0f, //
 	    		-0.5f, -0.5f, 0.0f, //
@@ -59,17 +63,20 @@ public class Engine {
 	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
 		Modeltexture texture = new Modeltexture(loader.loadTexture("grass1.png"));
 		TexturedModel texturedModel = new TexturedModel(model,texture);
-		Entity entity = new Entity(texturedModel,new Vector3f(0,0,0),0,0,0,1);
+		Entity entity = new Entity(texturedModel,new Vector3f(0,0,1),0,0,0,1);
+		Camera camera = new Camera(window);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
 
-			entity.increasePosition(0.000001f,0,0);
-			entity.increaseRotation(0,1,0);
+			entity.increasePosition(0,0,-0.002f);
+			camera.move(window);
+			//entity.increaseRotation(0,0,1);
 			callbacks.processInput(window.getWindow());
 			
 			renderer.prepare();
 
 			staticshader.start();
-
+			glfwSwapInterval(1);
+			staticshader.loadviewMatrix(camera);
 			renderer.render(entity,staticshader);
 			staticshader.stop();
 			GLFW.glfwSwapBuffers(window.getWindow());

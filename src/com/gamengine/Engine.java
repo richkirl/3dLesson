@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
 import com.gamengine.render.Loader;
 import models.RawModel;
 import com.gamengine.render.Renderer;
+import org.lwjgl.opengl.*;
 import shaders.StaticShader;
 import textures.Modeltexture;
 
@@ -27,7 +28,7 @@ public class Engine {
 	}
 
 	public void run() {
-		
+
 		init();
 		loop();
 		
@@ -57,20 +58,25 @@ public class Engine {
 		};
 
 	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
-		Modeltexture texture = new Modeltexture(loader.loadTexture("inq.bmp"));
+		Modeltexture texture = new Modeltexture(loader.loadTexture("grass1.png"));
 		TexturedModel texturedModel = new TexturedModel(model,texture);
-		Entity entity = new Entity(texturedModel,new Vector3f(0,0,0),0,0,0,0);
+		Entity entity = new Entity(texturedModel,new Vector3f(0,0,0),0,0,0,1);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
-			entity.increasePosition(0,0,0);
+
+			entity.increasePosition(0.000001f,0,0);
 			entity.increaseRotation(0,1,0);
 			callbacks.processInput(window.getWindow());
 			
 			renderer.prepare();
+
 			staticshader.start();
+
 			renderer.render(entity,staticshader);
 			staticshader.stop();
 			GLFW.glfwSwapBuffers(window.getWindow());
+
 			GLFW.glfwPollEvents();
+
 			
 		}
 		staticshader.clean();

@@ -4,7 +4,9 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -33,6 +35,8 @@ public abstract class ShaderProgram {
 
     public void start(){
         GL20.glUseProgram(programID);
+        getUniformLocation("transformationMatrix");
+        getAllUniformLocations();
     }
     public void stop(){
         GL20.glUseProgram(0);
@@ -68,9 +72,7 @@ public abstract class ShaderProgram {
         GL20.glUniform1f(location,toLoad);
     }
     protected void loadmatrix(int location, Matrix4f matrix){
-        matrix.get(matrixBuffer);
-        matrixBuffer.flip();
-        GL20.glUniformMatrix4fv(location,false,matrixBuffer);
+        GL30.glUniformMatrix4fv(location,false,matrix.get(matrixBuffer));
     }
     private static int loadShader(String file, int type){
         StringBuilder shaderSource = new StringBuilder();

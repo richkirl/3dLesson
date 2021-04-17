@@ -8,6 +8,7 @@ public class StaticShader extends ShaderProgram{
     private int location_transformationMatrix;
     public StaticShader() {
         super(VERTEX, FRAGMENT);
+
     }
     @Override
     protected void bindAttrib(){
@@ -21,6 +22,6 @@ public class StaticShader extends ShaderProgram{
     }
 
     public void loadtransformationMatrix(Matrix4f matrix){
-        super.loadmatrix(location_transformationMatrix,matrix);
+        loadmatrix(location_transformationMatrix,matrix);
     }
 }

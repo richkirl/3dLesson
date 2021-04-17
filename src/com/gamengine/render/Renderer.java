@@ -11,10 +11,12 @@ import org.lwjgl.opengl.GL30;
 import shaders.StaticShader;
 import toolbox.Maths;
 
+import static toolbox.Maths.createTransformationMatrix;
+
 public class Renderer {
 	public void prepare() {
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
+		//GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		GL11.glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	}
 	public void render(Entity entity, StaticShader shader) {
@@ -23,7 +25,7 @@ public class Renderer {
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
-		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(), entity.getRotZ(), entity.getScale());
+		Matrix4f transformationMatrix = createTransformationMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadtransformationMatrix(transformationMatrix);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D,model.getTexture().getID());

@@ -9,23 +9,18 @@ public class Maths {
 
     public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale){
         Matrix4f matrix = new Matrix4f();
-        matrix.identity();
-        //Matrix4f dest;
-        ///dest = matrix.translate(translation);
-        matrix.translate(translation,matrix);
-        matrix.identity();
-        matrix.rotate((float)Math.toRadians(rx),new Vector3f(1,0,0),matrix);
 
-        matrix.rotate((float)Math.toRadians(ry),new Vector3f(0,1,0),matrix);
-        matrix.rotate((float)Math.toRadians(rz),new Vector3f(0,0,1),matrix);
         matrix.identity();
-        matrix.scale(new Vector3f(scale,scale,scale),matrix);
-        matrix.identity();
-        //Matrix4f.translate(translation, matrix, matrix);
-        //Matrix4f.rotate((float) Math.toRadians(rx),new Vector3f(1,0,0),matrix,matrix);
-        //Matrix4f.rotate((float) Math.toRadians(ry),new Vector3f(0,1,0),matrix,matrix);
-        //Matrix4f.rotate((float) Math.toRadians(rz),new Vector3f(0,0,1),matrix,matrix);
-        //Matrix4f.scale(new Vector3f(scale,scale,scale),matrix,matrix);
+        //System.out.println(matrix);
+        //System.out.println("=====================================================");
+        matrix.translate(translation,matrix).rotate((float)Math.toRadians(rx),
+                        new Vector3f(1,0,0),matrix).rotate((float)Math.toRadians(ry),
+                        new Vector3f(0,1,0),matrix).rotate((float)Math.toRadians(rz),
+                        new Vector3f(0,0,1),matrix).scale(
+                        new Vector3f(scale,scale,scale),matrix);
+
+        //System.out.println(matrix);
+        //System.out.println("=====================================================");
         return matrix;
     }
 }

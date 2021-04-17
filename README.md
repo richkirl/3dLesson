@@ -17,5 +17,7 @@ For Windows:
 
 -Click 3dlesson.jar or test.bat
 
+(Current stage project availeble keiboard key: WAD)
+
 
 

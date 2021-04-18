@@ -20,6 +20,9 @@ public class Camera {
         if(GLFW.glfwGetKey(window.getWindow(),GLFW.GLFW_KEY_A)==GLFW.GLFW_PRESS){
             position.x-=0.02f;
         }
+        if(GLFW.glfwGetKey(window.getWindow(),GLFW.GLFW_KEY_S)==GLFW.GLFW_PRESS){
+            position.z+=0.02f;
+        }
     }
 
     public Vector3f getPosition() {

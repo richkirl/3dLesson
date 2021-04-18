@@ -35,7 +35,7 @@ public class Renderer {
 	public void render(Entity entity, StaticShader shader) {
 		TexturedModel model = entity.getModel();
 		RawModel rawModel = model.getRawmodel();
-		GL30.glBindVertexArray(rawModel.getVaoID());
+		GL30.glBindVertexArray(rawModel.getVertexCount());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		Matrix4f transformationMatrix = createTransformationMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(), entity.getRotZ(), entity.getScale());

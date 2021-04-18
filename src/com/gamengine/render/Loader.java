@@ -18,7 +18,7 @@ public class Loader {
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
 	private int textureID;
-	public RawModel loadToVao(float[] positions,float[] textureCoords, int[] indices) {
+	public RawModel loadToVao(float[] positions, float[] textureCoords, int[] indices) {
 		int vaoId = createVao();
 		bindIndicesBuffer(indices);
 		storeDataAttribList(0,3,positions);
@@ -33,9 +33,9 @@ public class Loader {
 		Image texture = Image.loadImage("C:\\JavaGameDev\\Lwjgl3-Game-Engine-Programming-Series-starting_code\\3dLesson\\res\\"+fileName);
 
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-		//GL30.glGenerateMipmap(textureID);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		GL30.glGenerateMipmap(textureID);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, texture.getWidth(), texture.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, texture.getImage() );
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D,0);
 

@@ -1,5 +1,8 @@
 package com.gamengine;
 
+
+
+import com.gamengine.render.*;
 import entities.Camera;
 import entities.Entity;
 import models.TexturedModel;
@@ -7,18 +10,19 @@ import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 
-import com.gamengine.render.Loader;
 import models.RawModel;
-import com.gamengine.render.Renderer;
 import shaders.StaticShader;
 import textures.Modeltexture;
+
+import java.io.FileNotFoundException;
 
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 
 public class Engine {
 	Window window = new Window();
 	Callbacks callbacks = new Callbacks();
-	
+	//private com.gamengine.render.OBJLoader OBJLoader;
+
 	public void init() {
 		GLFW.glfwInit();
 	    GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -29,14 +33,14 @@ public class Engine {
 	    
 	}
 
-	public void run() {
+	public void run() throws FileNotFoundException {
 
 		init();
 		loop();
 		
 	}
 
-	public void loop() {
+	public void loop() throws FileNotFoundException {
 		Loader loader = new Loader();
 
 		StaticShader staticshader = new StaticShader();
@@ -120,16 +124,20 @@ public class Engine {
 
 		};
 
-	    RawModel model = loader.loadToVao(vertices,textureCoords,indices);
-		Modeltexture texture = new Modeltexture(loader.loadTexture("grass1.png"));
-		TexturedModel texturedModel = new TexturedModel(model,texture);
-		Entity entity = new Entity(texturedModel,new Vector3f(0,0,-3),0,0,0,1);
+	    //RawModel model = loader.loadToVao(vertices,textureCoords,indices);
+		//RawModel model = OBJFileLoader.loadOBJ("untitled1");
+
+		//Modeltexture texture = new Modeltexture(loader.loadTexture("grass1.png"));
+		//RawModel model = OBJLoader.loadObjModel("untitled4",loader);
+		//TexturedModel texturedModel = new TexturedModel(model,texture);
+		//Entity entity = new Entity(texturedModel,new Vector3f(0,0,-10),0,0,0,1);
+		OBJl test = new OBJl();
 		Camera camera = new Camera(window);
 		while(!GLFW.glfwWindowShouldClose(window.getWindow())) {
 
 			//entity.increasePosition(0,0,-0.002f);
 			camera.move(window);
-			entity.increaseRotation(1,1,0);
+			//entity.increaseRotation(0,1,0);
 			callbacks.processInput(window.getWindow());
 			
 			renderer.prepare();
@@ -137,7 +145,7 @@ public class Engine {
 			staticshader.start();
 			glfwSwapInterval(1);
 			staticshader.loadviewMatrix(camera);
-			renderer.render(entity,staticshader);
+			//renderer.render(entity,staticshader);
 			staticshader.stop();
 			GLFW.glfwSwapBuffers(window.getWindow());
 

@@ -1,7 +1,7 @@
 package textures;
 
 public class Modeltexture {
-    private int textureID;
+    private final int textureID;
     public Modeltexture(int id){
         this.textureID = id;
     }

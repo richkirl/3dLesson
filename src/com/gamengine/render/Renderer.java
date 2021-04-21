@@ -29,15 +29,17 @@ public class Renderer {
 	}
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		//GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	}
 	public void render(Entity entity, StaticShader shader) {
 		TexturedModel model = entity.getModel();
 		RawModel rawModel = model.getRawmodel();
-		GL30.glBindVertexArray(rawModel.getVertexCount());
+		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
+
 		Matrix4f transformationMatrix = createTransformationMatrix(entity.getPosition(),entity.getRotX(),entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadtransformationMatrix(transformationMatrix);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -45,6 +47,7 @@ public class Renderer {
 		GL11.glDrawElements(GL11.GL_TRIANGLES,rawModel.getVertexCount(),GL11.GL_UNSIGNED_INT,0);
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
+
 		GL30.glBindVertexArray(0);
 	}
 

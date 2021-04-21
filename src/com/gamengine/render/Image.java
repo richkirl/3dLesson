@@ -8,8 +8,9 @@ import org.lwjgl.system.MemoryStack;
 
 public class Image {
 	
-	private ByteBuffer image;
-	private int width,height;
+	private final ByteBuffer image;
+	private final int width;
+	private final int height;
 	
 	public ByteBuffer getImage() {
 		return image;
@@ -46,6 +47,7 @@ public class Image {
 			}
 			width = w.get();
 			height = h.get();
+			assert image != null;
 			STBImage.stbi_image_free(image);
 		}
 		return new Image(width,height,image);

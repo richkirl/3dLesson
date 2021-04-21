@@ -3,8 +3,8 @@ package models;
 import textures.Modeltexture;
 
 public class TexturedModel {
-    private RawModel rawmodel;
-    private Modeltexture texture;
+    private final RawModel rawmodel;
+    private final Modeltexture texture;
 
     public TexturedModel(RawModel model, Modeltexture texture){
         this.rawmodel = model;
